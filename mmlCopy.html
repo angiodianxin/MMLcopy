@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>MMLコピー支援ツール</title>
+  </head>
+  <body>
+    <div class="container">
+      <div style="grid-column:1;">
+        マビノギから<br>コピーした<br>楽譜を貼り付け
+      </div>
+      <div style="grid-column:2/4;">
+        <textarea name="inArea" id="inArea" placeholder="タイトル :&#13;&#10;作曲者 :&#13;&#10;メロディー :&#13;&#10;和音 1 :&#13;&#10;和音 2 :&#13;&#10;歌 : "></textarea>
+      </div>
+      <div style="grid-column:1/4">
+        <button type="button" name="button" onclick="doConvert();" id="convButton">変換↓</button>
+      </div>
+      <div style="grid-column:1">
+        タイトル
+      </div>
+      <div style="grid-column:2">
+        <textarea id="titleArea" name="titleArea"></textarea>
+      </div>
+      <div style="grid-column:3">
+        <button type="button" name="button" onclick="copyTitle();" id="copyTitle">コピー</button>
+      </div>
+      <div style="grid-column:1">
+        MML
+      </div>
+      <div style="grid-column:2">
+        <textarea name="outArea" id="outArea"></textarea>
+      </div>
+      <div style="grid-column:3">
+        <button type="button" name="button" onclick="copyMML();" id="copyMML">コピー</button>
+      </div>
+    </div>
+  </body>
+  <style media="screen">
+    * {
+      box-sizing: border-box;
+    }
+    .container {
+      display: grid;
+      grid-template-rows: 10em 3em 2em 20em;
+      grid-template-columns: 8em 1fr 10em;
+      width: 80%;
+      max-width: 800px;
+    }
+    .container > * {
+      margin: .2em;
+    }
+    button, textarea {
+      height: 100%;
+      width: 100%;
+    }
+    textarea {
+      resize: none;
+    }
+  </style>
+  <script type="text/javascript">
+    const inArea = document.getElementById("inArea");
+    const titleArea = document.getElementById("titleArea");
+    const outArea = document.getElementById("outArea");
+    function doConvert() {
+      const raw = inArea.value;
+      const rawSpl = raw.split("\n");
+      var spl = [];
+      for (var i = 0; i < rawSpl.length; i++) {
+        if (rawSpl[i].length) {
+          spl[i] = rawSpl[i].split(" : ")[1];
+        }
+      }
+      titleArea.value = spl[0];
+      outArea.value = "MML@"+spl.slice(2).join()+";";
+    }
+    function copyTitle() {
+      titleArea.select();
+      document.execCommand("copy");
+    }
+    function copyMML() {
+      outArea.select();
+      document.execCommand("copy");
+    }
+  </script>
+</html>

@@ -87,6 +87,7 @@
     async function pasteIn() {
       const text = await navigator.clipboard.readText();
       inArea.value = text;
+      doConvert();
     }
   </script>
 </html>

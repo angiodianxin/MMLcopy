@@ -9,8 +9,11 @@
       <div style="grid-column:1;">
         マビノギから<br>コピーした<br>楽譜を貼り付け
       </div>
-      <div style="grid-column:2/4;">
+      <div style="grid-column:2;">
         <textarea name="inArea" id="inArea" placeholder="タイトル :&#13;&#10;作曲者 :&#13;&#10;メロディー :&#13;&#10;和音 1 :&#13;&#10;和音 2 :&#13;&#10;歌 : "></textarea>
+      </div>
+      <div style="grid-column:3">
+        <button type="button" name="button" onclick="pasteIn();" id="pasteIn">貼り付け</button>
       </div>
       <div style="grid-column:1/4">
         <button type="button" name="button" onclick="doConvert();" id="convButton">変換↓</button>
@@ -80,6 +83,10 @@
     function copyMML() {
       outArea.select();
       document.execCommand("copy");
+    }
+    async function pasteIn() {
+      const text = await navigator.clipboard.readText();
+      inArea.value = text;
     }
   </script>
 </html>
